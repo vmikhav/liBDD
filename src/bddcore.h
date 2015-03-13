@@ -129,7 +129,6 @@ extern "C"{
 	}BTreeSubContainer;
 #pragma pack(pop)
 
-
 	extern long allocateNode(Bdd *bdd);//create new BDD node
 	long createPage(Bdd *bdd);//increases the BDD size (it isn't intended for a call by the user)
 	extern void freeNode(long node, Bdd *bdd);//places a node in a stack of the free nodes
