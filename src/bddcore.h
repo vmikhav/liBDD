@@ -129,10 +129,10 @@ extern "C"{
 	}BTreeSubContainer;
 #pragma pack(pop)
 
-	long allocateNode(Bdd *bdd);//create new BDD node
+	extern long allocateNode(Bdd *bdd);//create new BDD node
 	long createPage(Bdd *bdd);//increases the BDD size (it isn't intended for a call by the user)
-	void freeNode(long node, Bdd *bdd);//places a node in a stack of the free nodes
-	void freeBdd(Bdd *bdd);
+	extern void freeNode(long node, Bdd *bdd);//places a node in a stack of the free nodes
+	extern void freeBdd(Bdd *bdd);
 	//{it is necessary for synthesizeBdd()
 	long createTemplatePage(TemplateContainer *container);
 	long allocateTemplate(TemplateContainer *container, long index);
@@ -143,24 +143,24 @@ extern "C"{
 	void freeBTreeNode(BTreeContainer *tree, long index);
 	//}
 	long getHash(long l, long r, long logHashTableSize);
-	long * initializeTraversal(Bdd *bdd);
-	void deinitializeTraversal(Bdd *bdd, long * head);
-	void checkBddOrderTable(Bdd *bdd);//deletes variables which aren't present in the BDD
-	long reduceBdd(Bdd * bdd);//deletes excess nodes
-	void inverseBdd(Bdd *bdd);//negation the BDD
-	long swappingVariables(unsigned short upperV, Bdd *bdd, long * head);//exchange of places of variables upperV and upperV+1
-	unsigned short siftingVariable(unsigned short k, Bdd *bdd, long * head);//search of the best position for a variable k
-	long makeBddOrder(Bdd *bdd, unsigned short * order, long orderSize);//changes an order of variables
-	long compareBdd(Bdd *L, Bdd *R);
-	void compactBdd(Bdd *bdd);//forces out unengaged nodes on top of busy area (can release some pages)
-	void fprintBdd(FILE * file, Bdd *bdd, long binaryMode);//BDD output to the console or in the file
-	Bdd* loadBdd(FILE* file);
-	long optimizeBdd(Bdd *bdd);//search of the best order of variables
-	long copyBdd(Bdd *target, Bdd *source);
+	extern long * initializeTraversal(Bdd *bdd);
+	extern void deinitializeTraversal(Bdd *bdd, long * head);
+	extern void checkBddOrderTable(Bdd *bdd);//deletes variables which aren't present in the BDD
+	extern long reduceBdd(Bdd * bdd);//deletes excess nodes
+	extern void inverseBdd(Bdd *bdd);//negation the BDD
+	extern long swappingVariables(unsigned short upperV, Bdd *bdd, long * head);//exchange of places of variables upperV and upperV+1
+	extern unsigned short siftingVariable(unsigned short k, Bdd *bdd, long * head);//search of the best position for a variable k
+	extern long makeBddOrder(Bdd *bdd, unsigned short * order, long orderSize);//changes an order of variables
+	extern long compareBdd(Bdd *L, Bdd *R);
+	extern void compactBdd(Bdd *bdd);//forces out unengaged nodes on top of busy area (can release some pages)
+	extern void fprintBdd(FILE * file, Bdd *bdd, long binaryMode);//BDD output to the console or in the file
+	extern Bdd* loadBdd(FILE* file);
+	extern long optimizeBdd(Bdd *bdd);//search of the best order of variables
+	extern long copyBdd(Bdd *target, Bdd *source);
 	long findLevel(long f, long g, char op, Bdd *L, Bdd *R);//it is necessary for synthesizeBdd()
 	long makeTemplate(long f, long g, long *tbot, long hbase, long logTableSize, TemplateContainer *container, Bdd* L, Bdd *R);//it is necessary for synthesizeBdd()
-	Bdd* synthesizeBdd(Bdd *L, Bdd *R, char op, long saveL, long saveR);//merge of two BDDs, using the specified operation
-	Bdd* createBdd(char *boolFunc);//analysis of analytical representation of function and creation of the appropriate BDD
+	extern Bdd* synthesizeBdd(Bdd *L, Bdd *R, char op, long saveL, long saveR);//merge of two BDDs, using the specified operation
+	extern Bdd* createBdd(char *boolFunc);//analysis of analytical representation of function and creation of the appropriate BDD
 
 #ifdef __windows__
 	DWORD WINAPI createBddThread(LPVOID lpParam);
