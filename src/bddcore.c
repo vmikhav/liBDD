@@ -1447,6 +1447,7 @@ Bdd* createBdd(char *boolFunc){
 	//parse of request
 	currS = boolFunc[currStringPos];
 	while (currS>'\n'){
+		if (currS == ' '){ currStringPos++; currS = boolFunc[currStringPos]; continue; }
 		currTreePos = allocateBTreeNode(tree);
 		if (j == 0){
 			treeNode_(oldTreePos).right = currTreePos;
@@ -1628,6 +1629,7 @@ Bdd* createBdd(char *boolFunc){
 	//parse of request
 	currS = boolFunc[currStringPos];
 	while (currS>'\n'){
+		if (currS == ' '){ currStringPos++; currS = boolFunc[currStringPos]; continue; }
 		currTreePos = allocateBTreeNode(tree);
 		if (j == 0){
 			treeNode_(oldTreePos).right = currTreePos;
