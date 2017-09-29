@@ -212,23 +212,26 @@ long * initializeTraversal(Bdd *bdd){
 	long * head = (long*)malloc(bdd->orderTableSize*sizeof(long));
 
 	for (p = 0; p<bdd->orderTableSize; p++) { head[p] = -1; }
-	s = bdd->root; node_(bdd->root, bdd).aux = ~0; node_(bdd->terminals[0], bdd).aux = ~0; node_(bdd->terminals[1], bdd).aux = ~0;
-	while (s != 0){
-		p = s;
-		s = ~node_(p, bdd).aux;
-		node_(p, bdd).aux = head[node_(p, bdd).v];
-		head[node_(p, bdd).v] = ~p;
-		node_(p, bdd).ref = 0;
-		if (node_(node_(p, bdd).lo, bdd).aux >= 0){ node_(node_(p, bdd).lo, bdd).aux = ~s; s = node_(p, bdd).lo; }
-		if (node_(node_(p, bdd).hi, bdd).aux >= 0){ node_(node_(p, bdd).hi, bdd).aux = ~s; s = node_(p, bdd).hi; }
-	}
+	node_(bdd->root, bdd).aux = ~0; node_(bdd->terminals[0], bdd).aux = ~0; node_(bdd->terminals[1], bdd).aux = ~0;
+	if ((bdd->root != bdd->terminals[0]) && (bdd->root != bdd->terminals[1])){
+		s = bdd->root; 
+		while (s != 0){
+			p = s;
+			s = ~node_(p, bdd).aux;
+			node_(p, bdd).aux = head[node_(p, bdd).v];
+			head[node_(p, bdd).v] = ~p;
+			node_(p, bdd).ref = 0;
+			if (node_(node_(p, bdd).lo, bdd).aux >= 0){ node_(node_(p, bdd).lo, bdd).aux = ~s; s = node_(p, bdd).lo; }
+			if (node_(node_(p, bdd).hi, bdd).aux >= 0){ node_(node_(p, bdd).hi, bdd).aux = ~s; s = node_(p, bdd).hi; }
+		}
 
-	for (s = 0; s < bdd->orderTableSize; s++){
-		p = ~head[s];
-		while (p){
-			node_(node_(p, bdd).lo, bdd).ref++;
-			node_(node_(p, bdd).hi, bdd).ref++;
-			p = ~node_(p, bdd).aux;
+		for (s = 0; s < bdd->orderTableSize; s++){
+			p = ~head[s];
+			while (p){
+				node_(node_(p, bdd).lo, bdd).ref++;
+				node_(node_(p, bdd).hi, bdd).ref++;
+				p = ~node_(p, bdd).aux;
+			}
 		}
 	}
 	node_(bdd->root, bdd).ref = 1;
